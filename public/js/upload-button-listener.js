@@ -21,7 +21,7 @@ function uploadButtonOnClick(e){
 
                 if(respJson['message'] === 'Success')
                 {
-                    getImage(respJson['imageName'])
+                    getImage(respJson['imageName']);
                 }
             } catch (err) {
                 console.log(err)
@@ -31,7 +31,7 @@ function uploadButtonOnClick(e){
         {
             console.log(error)
         }
-    })
+    });
 }
 
 function getImage(name)
@@ -39,16 +39,14 @@ function getImage(name)
     $.ajax({
         url: '/action/download-image-from-storage-action.php?name=' + name,
         type: 'GET',
-        processData: false,
-        contentType: false,
         success: (response) =>
         {
-            console.log(response);
             respJson = JSON.parse(response);
 
             if(respJson['image'] !== null)
             {
                 $('#uploaded-image-container').attr('src', respJson['image']);
+                processImage(name)
             }
         },
         error: (error) =>
